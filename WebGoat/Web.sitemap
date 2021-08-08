@@ -6,6 +6,9 @@
             <siteMapNode url="~/ProxySetup.aspx" title="Web Proxy Test" description="Test Proxy" />
             <siteMapNode url="~/RebuildDatabase.aspx" title="Testing Database" description="Rebuild Database" />
         </siteMapNode>
+		<siteMapNode url="~/Content/foo.aspx" title="Foo" description="Foo">
+			
+		</siteMapNode>
         <siteMapNode url="~/WebGoatCoins/Welcome.aspx" title="WebGoat Coins Customer Portal" description="Coins Customer Portal">
             <siteMapNode url="~/WebGoatCoins/CustomerLogin.aspx" title="Customer Login" description="Customer Login" />
             <siteMapNode url="~/WebGoatCoins/ForgotPassword.aspx" title="Forgot Password" description="Forgot Password" />

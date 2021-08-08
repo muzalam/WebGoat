@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HelpContentPlaceholder" runat="server">
     Like many data-driven web applications, this page is vulnerable to SQL injection.  The page allows users to sign 
-    up for their mailling list.  Before adding new users, the page does a check to make sure the email address isn&apos;t already
+    up for their mailing list.  Before adding new users, the page does a check to make sure the email address isn&apos;t already
     in the database.  Exploit this page and retrieve all the email addresses in the database.
 </asp:Content>
 

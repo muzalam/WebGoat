@@ -6,8 +6,23 @@
             <siteMapNode url="~/ProxySetup.aspx" title="Web Proxy Test" description="Test Proxy" />
             <siteMapNode url="~/RebuildDatabase.aspx" title="Testing Database" description="Rebuild Database" />
         </siteMapNode>
-		<siteMapNode url="~/Content/foo.aspx" title="Foo" description="Foo">
-			
+		<siteMapNode url="~/Content/InputAttacks.aspx" title="Input Attacks" description="Input Attacks">
+			<siteMapNode url="~/Content/SQLInjectionDiscovery.aspx" title="SQL Error Messages" description="SQL Errors" />
+			<siteMapNode url="~/Content/SQLInjection.aspx" title="Exploiting SQL Injection" description="SQL Injection" />
+			<siteMapNode url="~/Content/PathManipulation.aspx" title="File Download Path Manipulation" description="Download File Path Manipulation" />
+			<siteMapNode url="~/Content/UploadPathManipulation.aspx" title="File Upload Path Manipulation" description="Upload File Path Manipulation" />
+			<siteMapNode url="~/Content/ReadlineDoS.aspx" title="Readline DoS" description="Readline DoS" />
+			<siteMapNode url="~/Content/RegexDoS.aspx" title="Regex DoS" description="Regex DoS" />
+			<siteMapNode url="~/Content/StoredXSS.aspx" title="Stored XSS" description="Stored XSS" />
+			<siteMapNode url="~/Content/ReflectedXSS.aspx" title="Reflected XSS" description="Reflected XSS" />
+		</siteMapNode>
+		<siteMapNode url="~/Content/Encryption.aspx" title="Encryption" description="Encoding">
+            <siteMapNode url="~/Content/EncryptVSEncode.aspx" title="Encryption vs Encoding" description="Encrypt vs Encode" />
+            <siteMapNode url="~/Content/MessageDigest.aspx" title="Insecure Message Digest" description="Insecure Message Digest" />
+            <siteMapNode url="~/Content/Random.aspx" title="Weak Random Number Generators" description="Weak Random Number Generators" />
+        </siteMapNode>
+		<siteMapNode url="~/Content/AuthenticationAuthorization.aspx" title="Authentication and Authorization Issues" description="Authentication and Authorization Issues">
+			<siteMapNode url="~/Content/ForgotPassword.aspx" title="Insecure Forgot Password" description="Insecure Forgot Password" />
 		</siteMapNode>
         <siteMapNode url="~/WebGoatCoins/Welcome.aspx" title="WebGoat Coins Customer Portal" description="Coins Customer Portal">
             <siteMapNode url="~/WebGoatCoins/CustomerLogin.aspx" title="Customer Login" description="Customer Login" />
@@ -19,33 +34,15 @@
             <siteMapNode url="~/WebGoatCoins/Orders.aspx" title="Customer Orders" description="Customer Orders" />
             <siteMapNode url="~/WebGoatCoins/Logout.aspx" title="Logout" description="Customer Logout" />
         </siteMapNode>
-        <siteMapNode url="~/Content/InjectionAttacks.aspx" title="Injection Attacks" description="Injection">
-            <siteMapNode url="~/Content/SQLInjectionDiscovery.aspx" title="SQL Error Messages" description="SQL Errors" />
-            <siteMapNode url="~/Content/SQLInjection.aspx" title="Exploiting SQL Injection" description="SQL Injection" />
-            <siteMapNode url="~/Content/PathManipulation.aspx" title="File Download Path Manipulation" description="Download File Path Manipulation" />
-            <siteMapNode url="~/Content/UploadPathManipulation.aspx" title="File Upload Path Manipulation" description="Upload File Path Manipulation" />
-        </siteMapNode>
-        <siteMapNode url="~/Content/XSS.aspx" title="Cross Site Scripting (XSS)" description="XSS">
-            <siteMapNode url="~/Content/StoredXSS.aspx" title="Stored XSS" description="Stored XSS" />
-            <siteMapNode url="~/Content/ReflectedXSS.aspx" title="Reflected XSS" description="Reflected XSS" />
-        </siteMapNode>
-        <siteMapNode url="~/Content/Authentication.aspx" title="Authentication Issues" description="">
-            <siteMapNode url="~/Content/ForgotPassword.aspx" title="Insecure Forgot Password" description="Insecure Forgot Password" />
-        </siteMapNode>
         <!--siteMapNode url="~/Content/CSRF.aspx" title="Cross Site Request Forgery (CSRF)" description="">
       <siteMapNode url="~/Content/CSRFDemo.aspx" title="Form Vulnerable to CSRF" description="Form Vulnerable to CSRF"/>
     </siteMapNode-->
-        <siteMapNode url="~/Content/Debug.aspx" title="Testing and Debugging" description="Testing and Debugging">
+        <!--<siteMapNode url="~/Content/Debug.aspx" title="Testing and Debugging" description="Testing and Debugging">
             <siteMapNode url="~/Content/ExploitDebug.aspx" title="Exploiting Debug Page" description="Exploiting Debug Page" />
-        </siteMapNode>
-        <siteMapNode url="~/Content/Encryption.aspx" title="Encryption" description="Encoding">
-            <siteMapNode url="~/Content/EncryptVSEncode.aspx" title="Encryption vs Encoding" description="Encrypt vs Encode" />
-            <siteMapNode url="~/Content/MessageDigest.aspx" title="Insecure Message Digest" description="Insecure Message Digest" />
-            <siteMapNode url="~/Content/Random.aspx" title="Weak Random Number Generators" description="Weak Random Number Generators" />
         </siteMapNode>
         <siteMapNode url="~/Content/DotNet.aspx" title=".NET Exploits" description=".NET Exploits">
             <siteMapNode url="~/Content/Unsafe.aspx" title="Unsafe blocks" description="Unsafe blocks" />
-        </siteMapNode>
+        </siteMapNode>-->
     </siteMapNode>
 </siteMap>
 <!-- 

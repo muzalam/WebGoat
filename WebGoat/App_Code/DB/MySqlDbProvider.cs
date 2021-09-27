@@ -519,7 +519,19 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
-                MySqlDataAdapter da = new MySqlDataAdapter(sql, connection);
+                
+                 MySqlDataAdapter da = new MySqlDataAdapter(sql, connection);
+
+                 DataSet ds = new DataSet();
+                 da.Fill(ds);
+
+                 if (ds.Tables[0].Rows.Count == 0)
+                     return null;
+                 else
+                     return ds;
+
+                
+                /*MySqlCommand da = new My(sql, connection);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
 
@@ -527,6 +539,7 @@ namespace OWASP.WebGoat.NET.App_Code.DB
                     return null;
                 else
                     return ds;
+                */
             }
         }
 
@@ -548,7 +561,7 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             catch (Exception ex)
             {
                 log.Error("Error getting email by customer number", ex);
-                output = ex.Message;
+                output = "Error";
             }
             
             return output;

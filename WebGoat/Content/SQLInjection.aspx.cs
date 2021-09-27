@@ -19,17 +19,35 @@ namespace OWASP.WebGoat.NET
 		{
 
 		}
-
-		protected void btnFind_Click(object sender, EventArgs e)
+        public bool validateUerInput(String name)
+        {
+            var positiveRegex = new System.Text.RegularExpressions.Regex(@"^[A-Za-z0-9]*$");
+            if (!positiveRegex.IsMatch(name))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+            protected void btnFind_Click(object sender, EventArgs e)
         {
             string name = txtName.Text;
-            DataSet ds = du.GetEmailByName(name);
-
-            if (ds != null)
+            bool nameValidated = validateUerInput(name);
+            if (nameValidated == true)
             {
-                grdEmail.DataSource = ds.Tables[0];
-                grdEmail.DataBind();
+                DataSet ds = du.GetEmailByName(name);
+                if (ds != null)
+                {
+                    grdEmail.DataSource = ds.Tables[0];
+                    grdEmail.DataBind();
+                }
             }
+ 
+            
+
+           
 		}
 	}
 }

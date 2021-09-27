@@ -25,6 +25,7 @@ namespace OWASP.WebGoat.NET
             try
             {
                 string name = txtID.Text.Substring(0, 3);
+
                 string output = du.GetEmailByCustomerNumber(name);
 
                 lblOutput.Text = String.IsNullOrEmpty(output) ? "Customer Number does not exist" : output;

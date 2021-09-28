@@ -18,14 +18,16 @@ namespace OWASP.WebGoat.NET
         protected void btnCheckUsername_Click(object sender, EventArgs e)
         {
             string userName = txtUsername.Text;
-            string available = txtAvailable.Text;
-            string regex = "^(([A-Za-z])+.)+[A-Za-z]([0-9])+$";
-
-            Regex testUsername = new Regex(regex);
-  
-            Match match = testUsername.Match(userName);
             if (userName.Length < 12)
             {
+                string available = txtAvailable.Text;
+                string regex = "^(([A-Za-z])+.)+[A-Za-z]([0-9])+$";
+
+                Regex testUsername = new Regex(regex);
+
+                Match match = testUsername.Match(userName);
+
+
                 if (match.Success)
                 {
                     lblError.Text = "Username does not meet acceptable standards.";

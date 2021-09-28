@@ -22,14 +22,22 @@ namespace OWASP.WebGoat.NET
             string regex = "^(([A-Za-z])+.)+[A-Za-z]([0-9])+$";
 
             Regex testUsername = new Regex(regex);
+  
             Match match = testUsername.Match(userName);
-            if (match.Success)
+            if (userName.Length < 12)
             {
-                lblError.Text = "Username does not meet acceptable standards.";
+                if (match.Success)
+                {
+                    lblError.Text = "Username does not meet acceptable standards.";
+                }
+                else
+                {
+                    lblError.Text = "Good username.";
+                }
             }
             else
             {
-                lblError.Text = "Good username.";
+                lblError.Text = "Username too long";
             }
         }
     }

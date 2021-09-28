@@ -49,7 +49,7 @@ namespace OWASP.WebGoat.NET
                 comments += "<strong>Comment:</strong><br/>" + row["comment"] + "<br/><hr/>";
 
             }
-            lblComments.Text = comments;
+            lblComments.Text = HttpUtility.HtmlEncode(comments);
         }
 
         void FixedLoadComments()

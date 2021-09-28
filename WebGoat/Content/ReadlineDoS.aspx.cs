@@ -13,7 +13,7 @@ namespace OWASP.WebGoat.NET
         }
         protected void btnUpload_Click(object sender, EventArgs e)
         {
-            lblFileContent.Text = String.Empty;
+            /*lblFileContent.Text = String.Empty;
             Stream fileContents = file1.PostedFile.InputStream;
         
             using (StreamReader reader = new StreamReader(fileContents))
@@ -22,6 +22,30 @@ namespace OWASP.WebGoat.NET
                 {
                     lblFileContent.Text += reader.ReadLine() + "<br />";
                 }
+            }
+            */
+            if(file1.HasFile)
+            {
+                if(file1.PostedFile.ContentLength< 20728650)
+                {
+                    string filename = Path.GetFileName(file1.FileName);
+                    string Extension = Path.GetExtension(file1.FileName);
+                    if (Extension == ".xls" || Extension == ".pdf" || Extension == ".txt")
+                    file1.SaveAs(Server.MapPath("~/WebGoatCoins/uploads/") + filename);
+                }
+            }
+            else
+            {
+                lblFileContent.Text = "File too large";
+            }
+            
+            {
+                //bool nameValidated = validateUerInput(filename);
+                // if (nameValidated == true)
+                // {
+
+
+
             }
         }
     }

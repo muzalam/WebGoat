@@ -30,18 +30,27 @@ namespace OWASP.WebGoat.NET
         	//}
         	//else
         	//{
+				
         		string filename = Request.QueryString["filename"];
-        		if(filename != null)
+				
+				if (filename != null)
         		{
-                    try
-                    {
-                        ResponseFile(Request, Response, filename, MapPath("~/Downloads/" + filename), 100);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        lblStatus.Text = "File not found: " + filename;   
-                    }
+				if (filename == "architecture.pdf" || filename == "authentication.pdf" || filename == "csrf.pdf" || filename == "transport_layer.pdf")
+				{
+					try
+					{
+						ResponseFile(Request, Response, filename, MapPath("~/Downloads/" + filename), 100);
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex.Message);
+						lblStatus.Text = "File not found: " + filename;
+					}
+				}
+                else
+                {
+					lblStatus.Text = "File not found";
+                }
                 }
         	//}
         }

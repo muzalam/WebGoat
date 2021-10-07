@@ -1,6 +1,6 @@
 <%@ Page Title="" Language="C#" MasterPageFile="~/Resources/Master-Pages/Site.Master" AutoEventWireup="true" CodeBehind="ReadlineDoS.aspx.cs" Inherits="OWASP.WebGoat.NET.ReadlineDoS" %>
 <asp:Content ID="Content3" ContentPlaceHolderID="HelpContentPlaceholder" runat="server">
-    This webpage uses readline() function to parse input files that are uploaded to perform content validation. A DoS can becaused by uploading a really large file.
+    Hello! This webpage uses readline() function to parse input files that are uploaded to perform content validation. A DoS can becaused by uploading a really large file.
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">

@@ -23,7 +23,7 @@ namespace OWASP.WebGoat.NET.WebGoatCoins
             if(txtPassword1.Text != null && txtPassword2.Text != null && txtPassword1.Text == txtPassword2.Text)
             {
                 //get customer ID
-                string customerNumber = "";
+                string customerNumber = "287";
                 if (Request.Cookies["customerNumber"] != null)
                 {
                     customerNumber = Request.Cookies["customerNumber"].Value;

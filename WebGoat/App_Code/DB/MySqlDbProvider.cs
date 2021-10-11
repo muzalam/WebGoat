@@ -6,9 +6,70 @@ using System.Reflection;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 namespace OWASP.WebGoat.NET.App_Code.DB
 {
+    public class HashWithSaltResult
+    {
+        public string Salt { get; set; }
+        public string Digest { get; set; }
+
+        public HashWithSaltResult(string salt, string digest)
+        {
+            Salt = salt;
+            Digest = digest;
+        }
+    }
+
+    public class RNG
+    {
+        public string GenerateRandomCryptographicKey(int keyLength)
+        {
+            return Convert.ToBase64String(GenerateRandomCryptographicBytes(keyLength));
+        }
+
+        public byte[] GenerateRandomCryptographicBytes(int keyLength)
+        {
+            RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+            byte[] randomBytes = new byte[keyLength];
+            rngCryptoServiceProvider.GetBytes(randomBytes);
+            return randomBytes;
+        }
+    }
+
+    public class PasswordWithSaltHasher
+    {
+        public HashWithSaltResult HashWithSalt(string password, int saltLength, HashAlgorithm hashAlgo, byte[] providedSalt = null)
+        {
+            RNG rng = new RNG();
+            if (providedSalt != null)
+            {
+                //byte[] saltBytes = Encoding.UTF8.GetBytes(providedSalt);
+                
+                byte[] passwordAsBytes = Encoding.UTF8.GetBytes(password);
+                List<byte> passwordWithSaltBytes = new List<byte>();
+                passwordWithSaltBytes.AddRange(passwordAsBytes);
+                passwordWithSaltBytes.AddRange(providedSalt);
+                byte[] digestBytes = hashAlgo.ComputeHash(passwordWithSaltBytes.ToArray());
+                return new HashWithSaltResult(Convert.ToBase64String(providedSalt), Convert.ToBase64String(digestBytes));
+            }
+            else
+            {
+                byte[] saltBytes = rng.GenerateRandomCryptographicBytes(saltLength);
+                byte[] passwordAsBytes = Encoding.UTF8.GetBytes(password);
+                List<byte> passwordWithSaltBytes = new List<byte>();
+                passwordWithSaltBytes.AddRange(passwordAsBytes);
+                passwordWithSaltBytes.AddRange(saltBytes);
+                byte[] digestBytes = hashAlgo.ComputeHash(passwordWithSaltBytes.ToArray());
+                return new HashWithSaltResult(Convert.ToBase64String(saltBytes), Convert.ToBase64String(digestBytes));
+            }
+
+        }
+    }
     public class MySqlDbProvider : IDbProvider
     {
         private readonly string _connectionString;
@@ -109,15 +170,37 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             return Math.Abs(retVal1) + Math.Abs(retVal2) == 0;
         }
 
-        public bool IsValidCustomerLogin(string email, string password)
+        public string getSalt(string email)
+        {
+            string sql = "select * from CustomerLogin where email = '" + email + "';";
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                MySqlDataAdapter da = new MySqlDataAdapter(sql, connection);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+
+                //check if email address exists
+
+
+                //string encoded_password = ds.Tables[0].Rows[0]["Password"].ToString();
+                string salt = ds.Tables[0].Rows[0]["salt"].ToString();
+                return salt;
+
+            }
+        }
+
+            public bool IsValidCustomerLogin(string email, string password)
         {
             //encode password
-            string encoded_password = Encoder.Encode(password);
-            
+            //string encoded_password = Encoder.Encode(password);
+            var salt = getSalt(email);
             //check email/password
-            string sql = "select * from CustomerLogin where email = '" + email + 
-                "' and password = '" + encoded_password + "';";
-                        
+            string sql = "select * from CustomerLogin where email = '" + email + "';";
+            //create hash
+            PasswordWithSaltHasher pwHasher = new PasswordWithSaltHasher();
+            byte[] data = Convert.FromBase64String(salt);
+            HashWithSaltResult hashResultSha256 = pwHasher.HashWithSalt(password, 64, SHA256.Create(), data);
+
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 MySqlDataAdapter da = new MySqlDataAdapter(sql, connection);
@@ -203,7 +286,7 @@ namespace OWASP.WebGoat.NET.App_Code.DB
                     string sql = "select email from CustomerLogin where customerNumber = " + customerNumber;
                     MySqlCommand command = new MySqlCommand(sql, connection);
                     output = command.ExecuteScalar().ToString();
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -294,11 +377,15 @@ namespace OWASP.WebGoat.NET.App_Code.DB
 
         public string UpdateCustomerPassword(int customerNumber, string password)
         {
-            string sql = "update CustomerLogin set password = '" + Encoder.Encode(password) + "' where customerNumber = " + customerNumber;
+            PasswordWithSaltHasher pwHasher = new PasswordWithSaltHasher();
+            //byte[] data = Convert.FromBase64String(salt);
+            HashWithSaltResult hashResultSha256 = pwHasher.HashWithSalt(password, 64, SHA256.Create());
+            var hashed_password = hashResultSha256.Digest;
+
+            string sql = "update CustomerLogin set password = '" + hashed_password + "',salt='" + hashResultSha256.Salt + "' where customerNumber = " + customerNumber;
             string output = null;
             try
             {
-            
                 using (MySqlConnection connection = new MySqlConnection(_connectionString))
                 {
                     MySqlCommand command = new MySqlCommand(sql, connection);

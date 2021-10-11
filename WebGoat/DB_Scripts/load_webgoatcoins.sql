@@ -48,7 +48,7 @@ LOAD DATA LOCAL INFILE 'DB_Scripts/datafiles/customers.txt' INTO TABLE Customers
 
 SHOW WARNINGS LIMIT 10;
 
-LOAD DATA LOCAL INFILE 'DB_Scripts/datafiles/customerlogin.txt' INTO TABLE CustomerLogin
+LOAD DATA LOCAL INFILE 'DB_Scripts/datafiles/customerlogin.a2.txt' INTO TABLE CustomerLogin
           FIELDS TERMINATED BY '|' LINES TERMINATED BY '\n';
 
 SHOW WARNINGS LIMIT 10;

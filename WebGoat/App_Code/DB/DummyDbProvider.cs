@@ -21,6 +21,11 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             return null;
         }
 
+        public int CheckValidCustomerLogin(string email, string password)
+        {
+            return -1;
+        }
+
         public bool IsValidCustomerLogin(string email, string password)
         {
             return false;

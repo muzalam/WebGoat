@@ -11,7 +11,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>OWASP.WebGoat.NET</RootNamespace>
     <AssemblyName>DotNetGoat</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
@@ -57,7 +57,17 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Konscious.Security.Cryptography.Argon2, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Konscious.Security.Cryptography.Argon2.1.2.1\lib\net46\Konscious.Security.Cryptography.Argon2.dll</HintPath>
+    </Reference>
+    <Reference Include="Konscious.Security.Cryptography.Blake2, Version=1.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Konscious.Security.Cryptography.Blake2.1.0.9\lib\net46\Konscious.Security.Cryptography.Blake2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.4.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.4.4\Assemblies\v4.0\MySql.Data.dll</HintPath>
@@ -73,6 +83,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
@@ -523,6 +537,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\CustomerLoginData.cs" />
+    <Compile Include="App_Code\PasswordProvider.cs" />
     <Compile Include="Content\ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1065,6 +1080,9 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <servers defaultServer="SelfHostServer">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:52251/" workingDir="" />
+          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
@@ -1076,10 +1094,12 @@
   <ItemGroup>
     <Content Include="WebGoatCoins\ProductDetails.aspx" />
     <Content Include="WebGoatCoins\Web.config" />
+    <Content Include="app.config" />
     <None Include="Downloads\authentication.pdf" />
     <None Include="Downloads\csrf.pdf" />
     <None Include="Downloads\transport_layer.pdf" />
     <None Include="Downloads\architecture.pdf" />
+    <None Include="packages.config" />
     <None Include="TODO.txt" />
     <None Include="DB_Scripts\create_webgoatcoins.sql" />
     <None Include="DB_Scripts\load_webgoatcoins.sql" />

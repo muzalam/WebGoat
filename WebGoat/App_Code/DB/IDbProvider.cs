@@ -11,6 +11,8 @@ namespace OWASP.WebGoat.NET.App_Code.DB
 
         DataSet GetCatalogData();
 
+        int CheckValidCustomerLogin(string email, string password);
+
         bool IsValidCustomerLogin(string email, string password);
 
         bool RecreateGoatDb();

@@ -21,7 +21,7 @@ namespace OWASP.WebGoat.NET.App_Code.DB
         public const string CONFIG_EXT = "config";
 
         //DB Scripts
-        private const string SCRIPT_DIR = "C:\\Users\\student\\Workspace\\WebGoat\\WebGoat\\DB_Scripts";
+        private const string SCRIPT_DIR = "C:\\Users\\student\\Workspace\\test\\WebGoat\\WebGoat\\DB_Scripts";
         public static readonly string DB_CREATE_MYSQL_SCRIPT = Path.Combine(SCRIPT_DIR, "create_webgoatcoins.sql");
         public static readonly string DB_CREATE_SQLITE_SCRIPT = Path.Combine(SCRIPT_DIR, "create_webgoatcoins_sqlite3.sql");
         public static readonly string DB_LOAD_MYSQL_SCRIPT = Path.Combine(SCRIPT_DIR, "load_webgoatcoins.sql");

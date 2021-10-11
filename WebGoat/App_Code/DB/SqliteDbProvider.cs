@@ -70,6 +70,53 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             }
         }
 
+        // One way to check Login I suppose...
+        public int CheckValidCustomerLogin(string email, string password)
+        {
+            int cn = -1;
+            try
+            {
+                //get data
+                string sql = "select * from CustomerLogin where email = '" + email + "';";
+
+                using (SqliteConnection connection = new SqliteConnection(_connectionString))
+                {
+                    connection.Open();
+
+                    SqliteDataAdapter da = new SqliteDataAdapter(sql, connection);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+
+                    //check if email address exists
+                    if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        return cn;
+                    }
+
+                    // De-Base64 the password
+                    byte[] encoded_password_bytes = Convert.FromBase64String(ds.Tables[0].Rows[0]["Password"].ToString());
+
+                    byte[] encoded_salt = Convert.FromBase64String(ds.Tables[0].Rows[0]["Salt"].ToString());
+
+                    bool login_attempt = PasswordProvider.VerifyHash(password, encoded_salt, encoded_password_bytes);
+
+                    if (!login_attempt)
+                    {
+                        return cn;
+                    }
+
+                    cn = Int32.Parse(ds.Tables[0].Rows[0]["customerNumber"].ToString());
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error with custom customer login", ex);
+            }
+
+            return cn;
+        }
+
         public bool IsValidCustomerLogin(string email, string password)
         {
             //encode password
@@ -286,7 +333,10 @@ namespace OWASP.WebGoat.NET.App_Code.DB
 
         public string UpdateCustomerPassword(int customerNumber, string password)
         {
-            string sql = "update CustomerLogin set password = '" + Encoder.Encode(password) + "' where customerNumber = " + customerNumber;
+            byte[] salt = PasswordProvider.CreateSalt();
+            byte[] encoded = PasswordProvider.HashPassword(password, salt);
+
+            string sql = "update CustomerLogin set password = '" + Convert.ToBase64String(encoded) + "', salt = '" + Convert.ToBase64String(salt) + "' where customerNumber = " + customerNumber;
             string output = null;
             try
             {

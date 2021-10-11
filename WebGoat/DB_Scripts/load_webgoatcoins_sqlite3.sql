@@ -13,7 +13,7 @@ DELETE FROM Categories;
 DELETE FROM Comments;
 
 .import DB_Scripts/datafiles/customers.txt Customers
-.import DB_Scripts/datafiles/customerlogin.txt CustomerLogin
+.import DB_Scripts/datafiles/customerlogin.a2.txt CustomerLogin
 .import DB_Scripts/datafiles/securityquestions.txt SecurityQuestions
 .import DB_Scripts/datafiles/employees.txt Employees
 .import DB_Scripts/datafiles/offices.txt Offices

@@ -1,11 +1,9 @@
+using log4net;
+using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using MySql.Data.MySqlClient;
-using log4net;
 using System.Reflection;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
+using System.Text;
 
 namespace OWASP.WebGoat.NET.App_Code.DB
 {
@@ -107,6 +105,57 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             int retVal2 = Math.Abs(Util.RunProcessWithInput(_clientExec, args, DbConstants.DB_LOAD_MYSQL_SCRIPT));
             
             return Math.Abs(retVal1) + Math.Abs(retVal2) == 0;
+        }
+
+        // One way to check Login I suppose...
+        // Returns either customer number or -1.
+        public int CheckValidCustomerLogin(string email, string password)
+        {
+            int cn = -1;
+            try
+            {
+                //get data
+                string sql = "select * from CustomerLogin where email = '" + email + "';";
+
+                using (MySqlConnection connection = new MySqlConnection(_connectionString))
+                {
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, connection);
+                    DataSet ds = new DataSet();
+                    da.Fill(ds);
+
+                    //check if email address exists
+                    if (ds.Tables[0].Rows.Count == 0)
+                    {
+                        return cn;
+                    }
+
+                    // De-Base64 the password
+                    byte[] encoded_password_bytes = Convert.FromBase64String(ds.Tables[0].Rows[0]["Password"].ToString());
+
+                    byte[] encoded_salt = Convert.FromBase64String(ds.Tables[0].Rows[0]["Salt"].ToString());
+
+                    bool login_attempt = PasswordProvider.VerifyHash(password, encoded_salt, encoded_password_bytes);
+
+                    if (!login_attempt)
+                    {
+                       return cn;
+                    }
+
+                    cn = Int32.Parse(ds.Tables[0].Rows[0]["customerNumber"].ToString());
+
+                }
+
+            }
+            catch (MySqlException ex)
+            {
+                log.Error("Error with custom customer login", ex);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error with custom customer login", ex);
+            }
+
+            return cn;
         }
 
         public bool IsValidCustomerLogin(string email, string password)
@@ -294,13 +343,17 @@ namespace OWASP.WebGoat.NET.App_Code.DB
 
         public string UpdateCustomerPassword(int customerNumber, string password)
         {
-            string sql = "update CustomerLogin set password = '" + Encoder.Encode(password) + "' where customerNumber = " + customerNumber;
+            byte[] salt = PasswordProvider.CreateSalt();
+            byte[] encoded = PasswordProvider.HashPassword(password, salt);
+
+            string sql = "update CustomerLogin set password = '" + Convert.ToBase64String(encoded) + "', salt = '" + Convert.ToBase64String(salt) + "' where customerNumber = " + customerNumber;
             string output = null;
             try
             {
             
                 using (MySqlConnection connection = new MySqlConnection(_connectionString))
                 {
+                    connection.Open();
                     MySqlCommand command = new MySqlCommand(sql, connection);
                 
                     int rows_added = command.ExecuteNonQuery();

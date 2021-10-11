@@ -70,6 +70,7 @@ CREATE TABLE CustomerLogin (
 	email VARCHAR(100) NOT NULL,
 	customerNumber INTEGER NOT NULL,
 	password VARCHAR(40) NOT NULL,
+	salt VARCHAR(40) NOT NULL,
 	question_id SMALLINT NULL,
 	answer VARCHAR(50) NULL,
 	PRIMARY KEY (email)

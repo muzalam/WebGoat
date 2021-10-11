@@ -383,7 +383,7 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             var hashed_password = hashResultSha256.Digest;
 
             string sql = "update CustomerLogin set password = '" + hashed_password + "',salt='" + hashResultSha256.Salt + "' where customerNumber = " + customerNumber;
-            string output = null;
+            string output = null; 
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(_connectionString))

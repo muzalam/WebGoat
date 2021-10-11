@@ -69,9 +69,10 @@ CREATE TABLE Customers (
 CREATE TABLE CustomerLogin (
 	email VARCHAR(100) NOT NULL,
 	customerNumber INTEGER NOT NULL,
-	password VARCHAR(40) NOT NULL,
+	password VARCHAR(100) NOT NULL,
 	question_id SMALLINT NULL,
 	answer VARCHAR(50) NULL,
+	salt VARCHAR(100) NULL,
 	PRIMARY KEY (email)
 );
 

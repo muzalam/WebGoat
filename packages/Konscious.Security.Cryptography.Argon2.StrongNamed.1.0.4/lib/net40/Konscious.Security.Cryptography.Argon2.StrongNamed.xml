@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Konscious.Security.Cryptography.Argon2</name>
+        <name>Konscious.Security.Cryptography.Argon2.StrongNamed</name>
     </assembly>
     <members>
         <member name="T:Konscious.Security.Cryptography.Argon2">
@@ -92,21 +92,53 @@
             The implementation of Argon2i for use in the crypto library
             </summary>
         </member>
-        <member name="T:Konscious.Security.Cryptography.Argon2id">
+        <member name="T:Konscious.Security.Cryptography.HMACBlake2B">
             <summary>
-            An implementation of Argon2 https://github.com/P-H-C/phc-winner-argon2
+            An implementation of Blake2b HMAC per RFC-7693
             </summary>
         </member>
-        <member name="M:Konscious.Security.Cryptography.Argon2id.#ctor(System.Byte[])">
+        <member name="M:Konscious.Security.Cryptography.HMACBlake2B.#ctor(System.Int32)">
             <summary>
-            Create an Argon2 for encrypting the given password using Argon2id
+            Construct an HMACBlake2B without a key
             </summary>
-            <param name="password"></param>
+            <param name="hashSize">the hash size in bits</param>
         </member>
-        <member name="T:Konscious.Security.Cryptography.Argon2idCore">
+        <member name="M:Konscious.Security.Cryptography.HMACBlake2B.#ctor(System.Byte[],System.Int32)">
             <summary>
-            The implementation of Argon2d for use in the crypto library
+            Construct an HMACBlake2B
             </summary>
+            <param name="keyData">The key for the HMAC</param>
+            <param name="hashSize">The hash size in bits</param>
+        </member>
+        <member name="P:Konscious.Security.Cryptography.HMACBlake2B.HashSize">
+            <summary>
+            Implementation of HashSize <seealso cref="T:System.Security.Cryptography.HashAlgorithm"/>
+            </summary>
+            <returns>The hash</returns>
+        </member>
+        <member name="P:Konscious.Security.Cryptography.HMACBlake2B.Key">
+            <summary>
+            Overridden key to enforce size
+            </summary>
+        </member>
+        <member name="M:Konscious.Security.Cryptography.HMACBlake2B.Initialize">
+            <summary>
+            Implementation of Initialize - initializes the HMAC buffer
+            </summary>
+        </member>
+        <member name="M:Konscious.Security.Cryptography.HMACBlake2B.HashCore(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Implementation of HashCore
+            </summary>
+            <param name="data">The data to hash</param>
+            <param name="offset">The offset to start hashing from</param>
+            <param name="size">The amount of data in the hash to consume</param>
+        </member>
+        <member name="M:Konscious.Security.Cryptography.HMACBlake2B.HashFinal">
+            <summary>
+            Finish hashing and return the final hash
+            </summary>
+            <returns>The final hash from HashCore</returns>
         </member>
     </members>
 </doc>

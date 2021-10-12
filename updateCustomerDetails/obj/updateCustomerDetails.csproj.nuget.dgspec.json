@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\student\\Desktop\\updateCustomerDetails\\updateCustomerDetails.csproj": {}
+    "C:\\Users\\student\\Workspace\\WebGoat\\updateCustomerDetails\\updateCustomerDetails.csproj": {}
   },
   "projects": {
-    "C:\\Users\\student\\Desktop\\updateCustomerDetails\\updateCustomerDetails.csproj": {
+    "C:\\Users\\student\\Workspace\\WebGoat\\updateCustomerDetails\\updateCustomerDetails.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\student\\Desktop\\updateCustomerDetails\\updateCustomerDetails.csproj",
+        "projectUniqueName": "C:\\Users\\student\\Workspace\\WebGoat\\updateCustomerDetails\\updateCustomerDetails.csproj",
         "projectName": "updateCustomerDetails",
-        "projectPath": "C:\\Users\\student\\Desktop\\updateCustomerDetails\\updateCustomerDetails.csproj",
+        "projectPath": "C:\\Users\\student\\Workspace\\WebGoat\\updateCustomerDetails\\updateCustomerDetails.csproj",
         "packagesPath": "C:\\Users\\student\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\student\\Desktop\\updateCustomerDetails\\obj\\",
+        "outputPath": "C:\\Users\\student\\Workspace\\WebGoat\\updateCustomerDetails\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\student\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,12 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Konscious.Security.Cryptography.Argon2": {
+              "target": "Package",
+              "version": "[1.2.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

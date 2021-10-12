@@ -11,6 +11,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Konscious.Security.Cryptography;
+
 namespace OWASP.WebGoat.NET.App_Code.DB
 {
     public class HashWithSaltResult
@@ -188,8 +190,32 @@ namespace OWASP.WebGoat.NET.App_Code.DB
 
             }
         }
+        byte[] CreateSalt()
+        {
+            var buffer = new byte[16];
+            var rng = new RNGCryptoServiceProvider();
+            rng.GetBytes(buffer);
+            return buffer;
+        }
+        byte[] HashPassword(string password, byte[] salt)
+        {
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
 
-            public bool IsValidCustomerLogin(string email, string password)
+            argon2.Salt = salt;
+            argon2.DegreeOfParallelism = 8; // four cores
+            argon2.Iterations = 4;
+            argon2.MemorySize = 1024 * 1024; // 1 GB
+
+            return argon2.GetBytes(16);
+        }
+
+        bool VerifyHash(string password, byte[] salt, byte[] hash)
+        {
+            var newHash = HashPassword(password, salt);
+            return hash.SequenceEqual(newHash);
+        }
+
+        public bool IsValidCustomerLogin(string email, string password)
         {
             //encode password
             //string encoded_password = Encoder.Encode(password);
@@ -197,9 +223,9 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             //check email/password
             string sql = "select * from CustomerLogin where email = '" + email + "';";
             //create hash
-            PasswordWithSaltHasher pwHasher = new PasswordWithSaltHasher();
+            //PasswordWithSaltHasher pwHasher = new PasswordWithSaltHasher();
             byte[] data = Convert.FromBase64String(salt);
-            HashWithSaltResult hashResultSha256 = pwHasher.HashWithSalt(password, 64, SHA256.Create(), data);
+            //HashWithSaltResult hashResultSha256 = pwHasher.HashWithSalt(password, 64, SHA256.Create(), data);
             
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
@@ -222,10 +248,11 @@ namespace OWASP.WebGoat.NET.App_Code.DB
 
                 //    throw new Exception("Error checking login", ex);
                 //}
-                var actual_digest =  ds.Tables[0].Rows[0]["Password"].ToString();
+                var actual_digest = ds.Tables[0].Rows[0]["Password"].ToString();
+                byte [] act_digest = Convert.FromBase64String(actual_digest);
                 try
                 {
-                    return actual_digest == hashResultSha256.Digest;
+                    return VerifyHash(password, data, act_digest);
                 }
                 catch
                 {
@@ -388,10 +415,11 @@ namespace OWASP.WebGoat.NET.App_Code.DB
         {
             PasswordWithSaltHasher pwHasher = new PasswordWithSaltHasher();
             //byte[] data = Convert.FromBase64String(salt);
-            HashWithSaltResult hashResultSha256 = pwHasher.HashWithSalt(password, 64, SHA256.Create());
-            var hashed_password = hashResultSha256.Digest;
-
-            string sql = "update CustomerLogin set password = '" + hashed_password + "',salt='" + hashResultSha256.Salt + "' where customerNumber = " + customerNumber;
+            //HashWithSaltResult hashResultSha256 = pwHasher.HashWithSalt(password, 64, SHA256.Create());
+            //var hashed_password = hashResultSha256.Digest;
+            var Salt = CreateSalt();
+            var hash = HashPassword(password, Salt);
+            string sql = "update CustomerLogin set password = '" + Convert.ToBase64String(hash) + "',salt='" + Convert.ToBase64String(Salt) + "' where customerNumber = " + customerNumber;
             string output = null; 
             try
             {

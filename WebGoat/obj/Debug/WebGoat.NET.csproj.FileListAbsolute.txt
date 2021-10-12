@@ -22,3 +22,9 @@ C:\Users\student\Workspace\WebGoat\WebGoat\bin\Microsoft.VisualStudio.TextManage
 C:\Users\student\Workspace\WebGoat\WebGoat\bin\Microsoft.VisualStudio.Shell.Interop.8.0.dll
 C:\Users\student\Workspace\WebGoat\WebGoat\bin\Microsoft.VisualStudio.TextManager.Interop.8.0.dll
 C:\Users\student\Workspace\WebGoat\WebGoat\bin\Microsoft.MSXML.dll
+C:\Users\student\Workspace\WebGoat\WebGoat\bin\Konscious.Security.Cryptography.Argon2.dll
+C:\Users\student\Workspace\WebGoat\WebGoat\bin\Konscious.Security.Cryptography.Blake2.dll
+C:\Users\student\Workspace\WebGoat\WebGoat\bin\System.Numerics.Vectors.dll
+C:\Users\student\Workspace\WebGoat\WebGoat\bin\Konscious.Security.Cryptography.Argon2.xml
+C:\Users\student\Workspace\WebGoat\WebGoat\bin\Konscious.Security.Cryptography.Blake2.xml
+C:\Users\student\Workspace\WebGoat\WebGoat\bin\System.Numerics.Vectors.xml

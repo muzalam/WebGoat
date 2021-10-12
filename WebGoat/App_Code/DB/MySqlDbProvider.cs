@@ -200,7 +200,7 @@ namespace OWASP.WebGoat.NET.App_Code.DB
             PasswordWithSaltHasher pwHasher = new PasswordWithSaltHasher();
             byte[] data = Convert.FromBase64String(salt);
             HashWithSaltResult hashResultSha256 = pwHasher.HashWithSalt(password, 64, SHA256.Create(), data);
-
+            
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 MySqlDataAdapter da = new MySqlDataAdapter(sql, connection);
@@ -209,18 +209,27 @@ namespace OWASP.WebGoat.NET.App_Code.DB
                 DataSet ds = new DataSet();
             
                 da.Fill(ds);
-                
+
+                //try
+                //{
+                //    return ds.Tables[0].Rows.Count != 0;
+
+                //}
+                //catch (Exception ex)
+                //{
+                //    //Log this and pass the ball along.
+                //    log.Error("Error checking login", ex);
+
+                //    throw new Exception("Error checking login", ex);
+                //}
+                var actual_digest =  ds.Tables[0].Rows[0]["Password"].ToString();
                 try
                 {
-                    return ds.Tables[0].Rows.Count != 0;
-
+                    return actual_digest == hashResultSha256.Digest;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    //Log this and pass the ball along.
-                    log.Error("Error checking login", ex);
-                    
-                    throw new Exception("Error checking login", ex);
+                    throw new Exception("Error checking login");
                 }
             }
         }

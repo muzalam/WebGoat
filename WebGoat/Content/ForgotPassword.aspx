@@ -2,6 +2,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContentPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="HelpContentPlaceholder" runat="server">
+    Like many web applications that allow users to recover their forgotten passwords that are used to authenticate the user,
+    this website also tries to implement the functionality. However, it does it in an insecure way. It implements a two step
+    process for recovering the password. Check out the requests generated in Burp Suite (under Target tab) when you enter an 
+    incorrect response and look at the code to decipher the answer. You do not need to access the database for answers to the 
+    security question for this exercise.
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceholder" runat="server">
 

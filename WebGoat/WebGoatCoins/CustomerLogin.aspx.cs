@@ -9,6 +9,7 @@ using OWASP.WebGoat.NET.App_Code.DB;
 using OWASP.WebGoat.NET.App_Code;
 using log4net;
 using System.Reflection;
+using System.IO;
 
 namespace OWASP.WebGoat.NET.WebGoatCoins
 {
@@ -30,15 +31,42 @@ namespace OWASP.WebGoat.NET.WebGoatCoins
 
         protected void ButtonLogOn_Click(object sender, EventArgs e)
         {
+            
             string email = txtUserName.Text;
+            //string filename = email + ".txt";
             string pwd = txtPassword.Text;
+            string[] arr = email.Split('.');
+            string filename = arr[0];
+            filename = filename + ".txt";
+            var path = Server.MapPath("~/logs/");
+            StreamWriter sw = new StreamWriter(path+filename, true);
+            var now = DateTime.Now;
+            sw.WriteLine(now.ToString("yyyyMMddHH"));
+            sw.Flush();
+            sw.Close();
 
             log.Info("User " + email + " attempted to log in with password " + pwd);
+
             int cn = du.CheckValidCustomerLogin(email, pwd);
+            string[] lines = File.ReadAllLines(path+filename);
+            var arraylen = lines.Length;
+            if (arraylen > 3)
+            {
+                int last_loign = int.Parse(lines[arraylen - 1]);
+                int second_last_login = int.Parse(lines[arraylen - 2]);
+                int third_last_login = int.Parse(lines[arraylen - 3]);
+                if ((third_last_login - second_last_login) == 0 && (second_last_login - last_loign) == 0) 
+                {
+                    labelError.Text = "Incorrect Login"; //Account lockout
+                    PanelError.Visible = true;
+                    return;
+                }
+            }
+            
 
             if (cn == -1)
             {
-                labelError.Text = "Incorrect Login!"; 
+                labelError.Text = "Incorrect Login!";
                 PanelError.Visible = true;
                 return;
             }

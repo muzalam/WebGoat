@@ -20,10 +20,11 @@ namespace OWASP.WebGoat.NET
         {
             if (FileUpload1.HasFile)
             {
+                string filename = Path.GetFileName(FileUpload1.FileName);
+                string filepath = Server.MapPath("~/WebGoatCoins/uploads/") + filename;
                 try
                 {
-                    string filename = Path.GetFileName(FileUpload1.FileName);
-                    string filepath = Server.MapPath("~/WebGoatCoins/uploads/") + filename;
+                    
                     FileUpload1.SaveAs(filepath);
                     FileValidator.ValidateFile(filepath);
                     long firstNum = 0;
@@ -40,7 +41,8 @@ namespace OWASP.WebGoat.NET
                 }
                 catch (Exception ex)
                 {
-                    labelUpload.Text = "<div class='error' style='text-align:center'> (┛ಠ_ಠ)┛彡┻━┻ File processing failed: " + ex.Message + "</div>";
+                    labelUpload.Text = "<div class='error' style='text-align:center'> (┛ಠ_ಠ)┛彡┻━┻ File processing failed: "  + "</div>";
+                    File.Delete(filepath);
                 }
                 finally
                 {

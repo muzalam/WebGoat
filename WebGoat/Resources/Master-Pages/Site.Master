@@ -3,8 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head id="Head1" runat="server">
-	<link type="text/css" href="~/Resources/jquery-ui/jquery-ui-1.8.16.custom.css" rel="stylesheet" runat="server" />
-	<link type="text/css" href="~/Resources/jquery-libs/autocomplete/styles.css" rel="stylesheet" runat="server" />
     <title>WebGoat.NET</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="description" content="" />
@@ -25,11 +23,11 @@
 
 </head>
 <body>
-    <script type='text/javascript' src='<%=Page.ResolveUrl("~/Resources/client-scripts/jquery-1.4.2.min.js")%>'></script>
-    <script type='text/javascript' src='<%=Page.ResolveUrl("~/Resources/client-scripts/menu.js")%>'></script>
-    <script type='text/javascript' src='<%=Page.ResolveUrl("~/Resources/client-scripts/jquery-ui-1.8.16.custom.min.js")%>'></script>
-    <script type='text/javascript' src='<%=Page.ResolveUrl("~/Resources/client-scripts/jquery-ui-1.8.16.custom.min.js")%>'></script>
-    <script type='text/javascript' src='<%=Page.ResolveUrl("~/Resources/client-scripts/jquery.autocomplete.js")%>'></script>
+    <%: System.Web.Optimization.Scripts.Render("~/bundle/js") %>
+
+<%: System.Web.Optimization.Styles.Render("~/bundle/css") %>
+
+
 
     <script type="text/javascript">
 			$.fx.speeds._default = 500;

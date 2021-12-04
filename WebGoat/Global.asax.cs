@@ -19,7 +19,11 @@ namespace OWASP.WebGoat.NET
             //    BasicConfigurator.Configure();
             //else
                 log4net.Config.XmlConfigurator.Configure();
-            
+            System.Web.Optimization.BundleTable.Bundles.Add(new System.Web.Optimization.ScriptBundle("~/bundle/js").Include("~/Resources/client-scripts/jquery-1.4.2.min.js", "~/Resources/client-scripts/menu.js", "~/Resources/client-scripts/jquery-ui-1.8.16.custom.min.js", "~/Resources/client-scripts/jquery-ui-1.8.16.custom.min.js", "~/Resources/client-scripts/jquery.autocomplete.js"));
+
+            System.Web.Optimization.BundleTable.Bundles.Add(new System.Web.Optimization.StyleBundle("~/bundle/css").Include("~/Resources/jquery-ui/jquery-ui-1.8.16.custom.css", "~/Resources/jquery-libs/autocomplete/styles.css"));
+
+
             Settings.Init(Server);
         }
 
